@@ -2,10 +2,20 @@
   <v-text-field
     v-model="value"
     :label="label"
-    append-icon="fa fa-plus"
+    color="secondary"
+    class="mt-2"
+    elevation="20"
+    solo
+    outlined
+    hide-details
     @change="change"
-    @click:append="change"
-  ></v-text-field>
+  >
+    <template v-slot:append>
+      <v-icon color="secondary" class="pr-2 py-4" @click="change">
+        fa fa-plus
+      </v-icon>
+    </template>
+  </v-text-field>
 </template>
 
 <script>

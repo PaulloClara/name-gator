@@ -1,13 +1,17 @@
 <template>
   <v-list selected>
-    <v-list-item v-for="(item, index) in items" :key="item + index" @click="">
-      <v-list-item-content>
-        <v-list-item-title v-text="item"></v-list-item-title>
-      </v-list-item-content>
-      <v-list-item-icon @click="action(index)">
-        <v-icon>fa fa-{{ icon }}</v-icon>
-      </v-list-item-icon>
-    </v-list-item>
+    <v-divider></v-divider>
+    <div v-for="(item, index) in items" :key="item + index">
+      <v-list-item @click="">
+        <v-list-item-content>
+          <v-list-item-title v-text="item"></v-list-item-title>
+        </v-list-item-content>
+        <v-list-item-icon @click="action(index)">
+          <v-icon :color="icon.color">fa fa-{{ icon.name }}</v-icon>
+        </v-list-item-icon>
+      </v-list-item>
+      <v-divider></v-divider>
+    </div>
   </v-list>
 </template>
 

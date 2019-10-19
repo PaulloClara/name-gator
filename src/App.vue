@@ -1,37 +1,38 @@
 <template>
   <v-app>
+    <Logo />
     <v-content>
       <v-container>
         <v-row>
           <v-col cols="12" sm="6">
             <v-card class="px-4 pb-4">
-              <TitleCard title="Prefixes" />
+              <TitleCard title="Prefixos" :total="prefixes.length" />
               <ListItems
                 :items="prefixes"
                 :action="removePrefix"
-                icon="trash"
+                :icon="{ name: 'trash', color: 'ternary' }"
               />
-              <Input :add="addPrefix" label="Prefix" />
+              <Input :add="addPrefix" label="Prefixo" />
             </v-card>
           </v-col>
           <v-col>
             <v-card class="px-4 pb-4">
-              <TitleCard title="Suffixes" />
+              <TitleCard title="Sufixos" :total="suffixes.length" />
               <ListItems
                 :items="suffixes"
                 :action="removeSuffix"
-                icon="trash"
+                :icon="{ name: 'trash', color: 'ternary' }"
               />
-              <Input :add="addSuffix" label="Suffix" />
+              <Input :add="addSuffix" label="Sufixo" />
             </v-card>
           </v-col>
         </v-row>
-        <v-card>
-          <TitleCard title="Domains" />
+        <v-card class="px-4 pb-4 mt-4">
+          <TitleCard title="Domínios" :total="domains.length" />
           <ListItems
             :items="domains"
-            :action="clickDomain"
-            icon="shopping-cart"
+            :action="checkDomain"
+            :icon="{ name: 'shopping-cart', color: 'primary' }"
           />
         </v-card>
       </v-container>
@@ -40,6 +41,7 @@
 </template>
 
 <script>
+import Logo from "@/components/Logo";
 import Input from "@/components/Input";
 import ListItems from "@/components/ListItems";
 import TitleCard from "@/components/TitleCard";
@@ -47,20 +49,25 @@ import TitleCard from "@/components/TitleCard";
 export default {
   name: "App",
   components: {
+    Logo,
     Input,
     ListItems,
     TitleCard
   },
   data() {
     return {
-      prefixes: ["Air"],
-      suffixes: ["Bnb"],
+      prefixes: ["Air", "Git"],
+      suffixes: ["Bnb", "Hub"],
       domains: []
     };
   },
   methods: {
-    checkDomain(index) {},
-    clickDomain(index) {},
+    checkDomain(index) {
+      const baseURL = "https://checkout.hostgator.com.br/?a=add";
+      const domain = this.domains[index];
+
+      window.open(baseURL + `&sld=${domain}&tld=.com.br`);
+    },
     addPrefix(prefix) {
       this.prefixes.push(prefix);
       this.createDomains();
