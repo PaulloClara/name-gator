@@ -1,24 +1,28 @@
-# name-gator
+# NameGator
 
-## Project setup
-```
-yarn install
-```
+> Front Web do projeto NameGator, baseado no projeto de mesmo nome do Rodrigo Branas
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Tecnologias
 
-### Compiles and minifies for production
-```
-yarn build
-```
+- VueJS
+- VueTifyJS
+- Axios
 
-### Lints and fixes files
-```
-yarn lint
-```
+### Clonar/Configurar
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+`$ git clone https://github.com/PaulloClara/name-gator.git`\
+`$ cd name-gator`\
+`$ yarn install`
+
+### Rodar em Dev/Hot-Reload
+
+`$ yarn dev`
+
+### Compilar Codigo
+
+`$ yarn build`
+
+#### Links
+
+[API](https://github.com/PaulloClara/name-gator-api)\
+[Rodrigo Branas](https://github.com/rodrigobranas)
