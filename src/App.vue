@@ -71,11 +71,11 @@ export default {
       window.open(baseURL + `&sld=${domain}&tld=.com.br`);
     },
     addPrefix(prefix) {
-      this.prefixes.push(prefix);
+      this.prefixes.push({ value: prefix });
       this.createDomains();
     },
     addSuffix(suffix) {
-      this.suffixes.push(suffix);
+      this.suffixes.push({ value: suffix });
       this.createDomains();
     },
     removePrefix(index) {
@@ -90,7 +90,9 @@ export default {
       const domains = [];
 
       this.prefixes.forEach(prefix =>
-        this.suffixes.forEach(suffix => domains.push(prefix + suffix))
+        this.suffixes.forEach(suffix =>
+          domains.push({ value: prefix.value + suffix.value })
+        )
       );
 
       this.domains = domains;
