@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import API from "@/services/api";
+
 import Logo from "@/components/Logo";
 import Input from "@/components/Input";
 import ListItems from "@/components/ListItems";
@@ -56,8 +58,8 @@ export default {
   },
   data() {
     return {
-      prefixes: ["Air", "Git"],
-      suffixes: ["Bnb", "Hub"],
+      prefixes: [],
+      suffixes: [],
       domains: []
     };
   },
@@ -92,10 +94,23 @@ export default {
       );
 
       this.domains = domains;
+    },
+    async getItems() {
+      const query = `{
+        prefixes: items(itemType: "prefix") { id value }
+        suffixes: items(itemType: "suffix") { id value }
+      }`;
+
+      const items = (await API.request(query)).data.data;
+
+      this.prefixes = items.prefixes;
+      this.suffixes = items.suffixes;
+
+      this.createDomains();
     }
   },
   mounted() {
-    this.createDomains();
+    this.getItems();
   }
 };
 </script>
