@@ -59,34 +59,12 @@ export default {
   data() {
     return {
       prefixes: [],
-      suffixes: [],
-      domains: []
+      suffixes: []
     };
   },
-  methods: {
-    checkDomain(index) {
-      const baseURL = "https://checkout.hostgator.com.br/?a=add";
-      const domain = this.domains[index];
-
-      window.open(baseURL + `&sld=${domain}&tld=.com.br`);
-    },
-    addPrefix(prefix) {
-      this.prefixes.push({ value: prefix });
-      this.createDomains();
-    },
-    addSuffix(suffix) {
-      this.suffixes.push({ value: suffix });
-      this.createDomains();
-    },
-    removePrefix(index) {
-      this.prefixes.splice(index, 1);
-      this.createDomains();
-    },
-    removeSuffix(index) {
-      this.suffixes.splice(index, 1);
-      this.createDomains();
-    },
-    createDomains() {
+  computed: {
+    domains() {
+      console.log("oi");
       const domains = [];
 
       this.prefixes.forEach(prefix =>
@@ -95,7 +73,27 @@ export default {
         )
       );
 
-      this.domains = domains;
+      return domains;
+    }
+  },
+  methods: {
+    checkDomain(index) {
+      const baseURL = "https://checkout.hostgator.com.br/?a=add";
+      const domain = this.domains[index];
+
+      window.open(baseURL + `&sld=${domain.value}&tld=.com.br`);
+    },
+    addPrefix(prefix) {
+      this.prefixes.push({ value: prefix });
+    },
+    addSuffix(suffix) {
+      this.suffixes.push({ value: suffix });
+    },
+    removePrefix(index) {
+      this.prefixes.splice(index, 1);
+    },
+    removeSuffix(index) {
+      this.suffixes.splice(index, 1);
     },
     async getItems() {
       const query = `{
@@ -107,8 +105,6 @@ export default {
 
       this.prefixes = items.prefixes;
       this.suffixes = items.suffixes;
-
-      this.createDomains();
     }
   },
   mounted() {
