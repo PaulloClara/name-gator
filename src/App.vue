@@ -59,54 +59,30 @@ export default {
   data() {
     return {
       prefixes: [],
-      suffixes: []
+      suffixes: [],
+      domains: []
     };
-  },
-  computed: {
-    domains() {
-      const domains = [];
-
-      this.prefixes.forEach(prefix =>
-        this.suffixes.forEach(suffix =>
-          domains.push({ value: prefix.value + suffix.value })
-        )
-      );
-
-      return domains;
-    }
   },
   methods: {
     checkDomain(index) {
       const baseURL = "https://checkout.hostgator.com.br/?a=add";
       const domain = this.domains[index];
 
-      window.open(baseURL + `&sld=${domain.value}&tld=.com.br`);
+      window.open(baseURL + `&sld=${domain.name}&tld=.com.br`);
     },
     addPrefix(prefix) {
-      const item = { value: prefix };
-      this.prefixes.push(item);
-
-      item.type = "prefix";
-      this.saveItem(item);
+      this.saveItem({ value: prefix, type: "prefix" });
     },
     addSuffix(suffix) {
-      const item = { value: suffix };
-      this.suffixes.push(item);
-
-      item.type = "suffix";
-      this.saveItem(item);
+      this.saveItem({ value: suffix, type: "suffix" });
     },
     removePrefix(index) {
       const _id = this.prefixes[index].id;
       this.removeItem({ _id });
-
-      this.prefixes.splice(index, 1);
     },
     removeSuffix(index) {
       const _id = this.suffixes[index].id;
       this.removeItem({ _id });
-
-      this.suffixes.splice(index, 1);
     },
     async getItems() {
       const query = `{
@@ -125,6 +101,9 @@ export default {
       }`;
 
       await API.request(query);
+
+      this.getItems();
+      this.generateDomains();
     },
     async removeItem({ _id }) {
       const query = `mutation {
@@ -132,10 +111,21 @@ export default {
       }`;
 
       await API.request(query);
+
+      this.getItems();
+      this.generateDomains();
+    },
+    async generateDomains() {
+      const query = `mutation {
+        domains: generateDomains { name available }
+      }`;
+
+      this.domains = (await API.request(query)).data.data.domains;
     }
   },
   mounted() {
     this.getItems();
+    this.generateDomains();
   }
 };
 </script>
