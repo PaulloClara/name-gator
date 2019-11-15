@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const http = axios.create({
   baseURL: "https://api-name-gator.herokuapp.com",
-  timeout: 10000
+  timeout: 20000
 });
 
 function request(query) {
