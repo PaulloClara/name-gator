@@ -64,7 +64,6 @@ export default {
   },
   computed: {
     domains() {
-      console.log("oi");
       const domains = [];
 
       this.prefixes.forEach(prefix =>
@@ -84,10 +83,18 @@ export default {
       window.open(baseURL + `&sld=${domain.value}&tld=.com.br`);
     },
     addPrefix(prefix) {
-      this.prefixes.push({ value: prefix });
+      const item = { value: prefix };
+      this.prefixes.push(item);
+
+      item.type = "prefix";
+      this.saveItem(item);
     },
     addSuffix(suffix) {
-      this.suffixes.push({ value: suffix });
+      const item = { value: suffix };
+      this.suffixes.push(item);
+
+      item.type = "suffix";
+      this.saveItem(item);
     },
     removePrefix(index) {
       this.prefixes.splice(index, 1);
@@ -105,6 +112,13 @@ export default {
 
       this.prefixes = items.prefixes;
       this.suffixes = items.suffixes;
+    },
+    async saveItem({ type, value }) {
+      const query = `mutation {
+        saveItem(item: { type: "${type}", value: "${value}" }) { id value }
+      }`;
+
+      await API.request(query);
     }
   },
   mounted() {
