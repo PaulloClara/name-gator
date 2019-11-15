@@ -97,9 +97,15 @@ export default {
       this.saveItem(item);
     },
     removePrefix(index) {
+      const _id = this.prefixes[index].id;
+      this.removeItem({ _id });
+
       this.prefixes.splice(index, 1);
     },
     removeSuffix(index) {
+      const _id = this.suffixes[index].id;
+      this.removeItem({ _id });
+
       this.suffixes.splice(index, 1);
     },
     async getItems() {
@@ -116,6 +122,13 @@ export default {
     async saveItem({ type, value }) {
       const query = `mutation {
         saveItem(item: { type: "${type}", value: "${value}" }) { id value }
+      }`;
+
+      await API.request(query);
+    },
+    async removeItem({ _id }) {
+      const query = `mutation {
+        removeItem(itemID: "${_id}")
       }`;
 
       await API.request(query);
