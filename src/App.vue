@@ -9,10 +9,13 @@
               <TitleCard title="Prefixos" :total="prefixes.length" />
               <ListItems
                 :items="prefixes"
-                :action="removePrefix"
                 :icon="{ name: 'trash', color: 'ternary' }"
+                @selectRemoveItem="removeItem({ type: 'prefix', ...$event })"
               />
-              <Input :add="addPrefix" label="Prefixo" />
+              <Input
+                label="Prefixo"
+                @addItem="addItem({ type: 'prefix', ...$event })"
+              />
             </v-card>
           </v-col>
           <v-col>
@@ -20,10 +23,13 @@
               <TitleCard title="Sufixos" :total="suffixes.length" />
               <ListItems
                 :items="suffixes"
-                :action="removeSuffix"
                 :icon="{ name: 'trash', color: 'ternary' }"
+                @selectRemoveItem="removeItem({ type: 'suffix', ...$event })"
               />
-              <Input :add="addSuffix" label="Sufixo" />
+              <Input
+                label="Sufixo"
+                @addItem="addItem({ type: 'suffix', ...$event })"
+              />
             </v-card>
           </v-col>
         </v-row>
@@ -31,8 +37,8 @@
           <TitleCard title="Domínios" :total="domains.length" />
           <ListItems
             :items="domains"
-            :action="checkDomain"
             :icon="{ name: 'shopping-cart', color: 'primary' }"
+            @selectItem="checkDomain"
           />
         </v-card>
       </v-container>
@@ -41,8 +47,6 @@
 </template>
 
 <script>
-import API from "@/services/api";
-
 import Logo from "@/components/Logo";
 import Input from "@/components/Input";
 import ListItems from "@/components/ListItems";
@@ -56,76 +60,51 @@ export default {
     ListItems,
     TitleCard
   },
-  data() {
-    return {
-      prefixes: [],
-      suffixes: [],
-      domains: []
-    };
+  data: () => ({
+    prefixes: [],
+    suffixes: []
+  }),
+  computed: {
+    domains() {
+      const domains = [];
+
+      this.$data.prefixes.forEach(prefix =>
+        this.$data.suffixes.forEach(suffix =>
+          domains.push(`${prefix}${suffix}`)
+        )
+      );
+
+      return domains;
+    }
   },
   methods: {
-    checkDomain(index) {
+    addItem({ type, value }) {
+      this.$data[`${type}es`].push(value);
+    },
+    removeItem({ type, index }) {
+      this.$data[`${type}es`].splice(index, 1);
+    },
+    checkDomain({ index }) {
       const baseURL = "https://checkout.hostgator.com.br/?a=add";
       const domain = this.domains[index];
 
-      window.open(baseURL + `&sld=${domain.name}&tld=.com.br`);
-    },
-    addPrefix(prefix) {
-      this.saveItem({ value: prefix, type: "prefix" });
-    },
-    addSuffix(suffix) {
-      this.saveItem({ value: suffix, type: "suffix" });
-    },
-    removePrefix(index) {
-      const _id = this.prefixes[index].id;
-      this.removeItem({ _id });
-    },
-    removeSuffix(index) {
-      const _id = this.suffixes[index].id;
-      this.removeItem({ _id });
-    },
-    async getItems() {
-      const query = `{
-        prefixes: items(itemType: "prefix") { id value }
-        suffixes: items(itemType: "suffix") { id value }
-      }`;
-
-      const items = (await API.request(query)).data.data;
-
-      this.prefixes = items.prefixes;
-      this.suffixes = items.suffixes;
-    },
-    async saveItem({ type, value }) {
-      const query = `mutation {
-        saveItem(item: { type: "${type}", value: "${value}" }) { id value }
-      }`;
-
-      await API.request(query);
-
-      this.getItems();
-      this.generateDomains();
-    },
-    async removeItem({ _id }) {
-      const query = `mutation {
-        removeItem(itemID: "${_id}")
-      }`;
-
-      await API.request(query);
-
-      this.getItems();
-      this.generateDomains();
-    },
-    async generateDomains() {
-      const query = `mutation {
-        domains: generateDomains { name available }
-      }`;
-
-      this.domains = (await API.request(query)).data.data.domains;
+      window.open(baseURL + `&sld=${domain}&tld=.com.br`);
     }
   },
-  mounted() {
-    this.getItems();
-    this.generateDomains();
+  beforeMount() {
+    this.$data.prefixes = localStorage.getItem("prefixes")
+      ? localStorage.getItem("prefixes").split(",")
+      : ["git", "name"];
+    this.$data.suffixes = localStorage.getItem("suffixes")
+      ? localStorage.getItem("suffixes").split(",")
+      : ["hub", "gator"];
+
+    window.addEventListener("beforeunload", () => {
+      const { prefixes, suffixes } = this.$data;
+
+      localStorage.setItem("prefixes", prefixes);
+      localStorage.setItem("suffixes", suffixes);
+    });
   }
 };
 </script>

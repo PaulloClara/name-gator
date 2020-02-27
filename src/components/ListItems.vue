@@ -1,20 +1,18 @@
 <template>
   <v-list selected>
     <v-divider></v-divider>
-    <div v-for="(item, index) in items" :key="item.id || index + 'd'">
-      <v-list-item @click="">
+    <div v-for="(item, index) in items" :key="`${index}${item}`">
+      <v-list-item @click="$emit('selectItem', { index })">
         <v-list-item-content>
-          <v-list-item-title v-text="item.value || item.name" />
+          <v-list-item-title v-text="item" />
         </v-list-item-content>
 
-        <v-list-item-icon
-          @click="item.available !== false ? action(index) : () => {}"
-        >
-          <v-icon :color="icon.color" v-if="item.available === undefined">
+        <v-list-item-icon @click="$emit('selectRemoveItem', { index })">
+          <v-icon v-if="item.available === undefined" :color="icon.color">
             fa fa-{{ icon.name }}
           </v-icon>
 
-          <v-icon :color="item.available ? icon.color : 'error'" v-else>
+          <v-icon v-else :color="item.available ? icon.color : 'error'">
             fa fa-{{ item.available ? icon.name : "exclamation-triangle" }}
           </v-icon>
         </v-list-item-icon>
@@ -27,6 +25,6 @@
 <script>
 export default {
   name: "List",
-  props: ["items", "action", "icon"]
+  props: ["items", "icon"]
 };
 </script>

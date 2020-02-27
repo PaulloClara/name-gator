@@ -21,17 +21,17 @@
 <script>
 export default {
   name: "Input",
-  props: ["add", "label"],
-  data() {
-    return {
-      value: ""
-    };
-  },
+  props: ["label"],
+  data: () => ({
+    value: ""
+  }),
   methods: {
     change() {
-      if (!this.value) return;
+      const { value } = this.$data;
 
-      this.add(this.value[0].toUpperCase() + this.value.slice(1).toLowerCase());
+      if (!value.trim()) return;
+      this.$emit("addItem", { value });
+
       this.value = "";
     }
   }
