@@ -1,10 +1,10 @@
 <template>
   <v-list selected>
     <v-divider></v-divider>
-    <div v-for="(item, index) in items" :key="`${index}${item}`">
+    <div v-for="(item, index) in items" :key="`${index}${item.name}`">
       <v-list-item @click="$emit('selectItem', { index })">
         <v-list-item-content>
-          <v-list-item-title v-text="item" />
+          <v-list-item-title v-text="item.name" class="text-capitalize" />
         </v-list-item-content>
 
         <v-list-item-icon @click="$emit('selectRemoveItem', { index })">
