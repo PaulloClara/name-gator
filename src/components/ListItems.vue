@@ -12,11 +12,11 @@
 
       <v-list-item-icon @click="$emit('selectRemoveItem', { index, type })">
         <v-icon v-if="type !== 'domain'" :color="icon.color">
-          fa fa-{{ icon.name }}
+          fa-{{ icon.name }}
         </v-icon>
 
         <v-icon v-else :color="item.available ? icon.color : 'error'">
-          fa fa-{{ item.available ? icon.name : "exclamation-triangle" }}
+          fa-{{ item.available ? icon.name : "exclamation-triangle" }}
         </v-icon>
       </v-list-item-icon>
     </v-list-item>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "List",
+  name: "ListItems",
   props: ["items", "icon", "type"]
 };
 </script>

@@ -11,7 +11,7 @@
   >
     <template #append>
       <v-icon color="secondary" @click="change">
-        fa fa-plus
+        fa-plus
       </v-icon>
     </template>
   </v-text-field>

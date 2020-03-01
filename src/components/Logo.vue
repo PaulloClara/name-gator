@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center my-6">
+  <div class="text-center">
     <h1 class="display-3">NameGat<m-set-theme />r</h1>
 
     <h2 class="subtitle-2 mt-2">

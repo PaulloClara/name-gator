@@ -12,20 +12,17 @@
 <script>
 export default {
   name: "SetTheme",
-  data() {
-    return {
-      color: "primary"
-    };
-  },
+  data: () => ({
+    color: "primary"
+  }),
   methods: {
     setTheme() {
-      if (localStorage.theme === "dark") {
-        localStorage.theme = "light";
-        this.$vuetify.theme.dark = false;
-      } else {
-        localStorage.theme = "dark";
-        this.$vuetify.theme.dark = true;
-      }
+      localStorage.setItem(
+        "theme",
+        localStorage.getItem("theme") === "dark" ? "light" : "dark"
+      );
+
+      this.$vuetify.theme.dark = localStorage.getItem("theme") === "dark";
     }
   },
   mounted() {
