@@ -1,80 +1,80 @@
 <template>
   <v-app>
-    <m-logo />
+    <header class="pa-2">
+      <m-logo />
+    </header>
 
-    <v-content>
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12" sm="6" md="4">
-            <v-card class="px-4 pb-4">
-              <m-card-title>
-                <template #title>Prefixos</template>
-                <template #total>{{ prefixes.length }}</template>
-              </m-card-title>
+    <v-container tag="main">
+      <v-row justify="center">
+        <v-col cols="12" sm="6" md="4">
+          <v-card class="px-4 pb-4">
+            <m-card-title>
+              <template #title>Prefixos</template>
+              <template #total>{{ prefixes.length }}</template>
+            </m-card-title>
 
-              <m-list-items
-                type="prefix"
-                :items="prefixes"
-                :icon="{ name: 'trash', color: 'ternary' }"
-                @selectRemoveItem="removeItem"
-              />
+            <m-list-items
+              type="prefix"
+              :items="prefixes"
+              :icon="{ name: 'trash', color: 'ternary' }"
+              @selectRemoveItem="removeItem"
+            />
 
-              <m-input label="Prefixo" type="prefix" @addItem="addItem" />
-            </v-card>
-          </v-col>
+            <m-input label="Prefixo" type="prefix" @addItem="addItem" />
+          </v-card>
+        </v-col>
 
-          <v-col cols="12" sm="6" md="4">
-            <v-card class="px-4 pb-4">
-              <m-card-title>
-                <template #title>Sufixos</template>
-                <template #total>{{ suffixes.length }}</template>
-              </m-card-title>
+        <v-col cols="12" sm="6" md="4">
+          <v-card class="px-4 pb-4">
+            <m-card-title>
+              <template #title>Sufixos</template>
+              <template #total>{{ suffixes.length }}</template>
+            </m-card-title>
 
-              <m-list-items
-                type="suffix"
-                :items="suffixes"
-                :icon="{ name: 'trash', color: 'ternary' }"
-                @selectRemoveItem="removeItem"
-              />
+            <m-list-items
+              type="suffix"
+              :items="suffixes"
+              :icon="{ name: 'trash', color: 'ternary' }"
+              @selectRemoveItem="removeItem"
+            />
 
-              <m-input label="Sufixo" type="suffix" @addItem="addItem" />
-            </v-card>
-          </v-col>
+            <m-input label="Sufixo" type="suffix" @addItem="addItem" />
+          </v-card>
+        </v-col>
 
-          <v-col cols="12" sm="6" md="4">
-            <v-card class="px-4 pb-4">
-              <m-card-title>
-                <template #title>TLDs</template>
-                <template #total>{{ tlds.length }}</template>
-              </m-card-title>
+        <v-col cols="12" sm="6" md="4">
+          <v-card class="px-4 pb-4">
+            <m-card-title>
+              <template #title>TLDs</template>
+              <template #total>{{ tlds.length }}</template>
+            </m-card-title>
 
-              <m-list-items
-                type="tld"
-                :items="tlds"
-                :icon="{ name: 'trash', color: 'ternary' }"
-                @selectRemoveItem="removeItem"
-              />
+            <m-list-items
+              type="tld"
+              :items="tlds"
+              :icon="{ name: 'trash', color: 'ternary' }"
+              @selectRemoveItem="removeItem"
+            />
 
-              <m-input label="TLD" type="tld" @addItem="addItem" />
-            </v-card>
-          </v-col>
-        </v-row>
+            <m-input label="TLD" type="tld" @addItem="addItem" />
+          </v-card>
+        </v-col>
+      </v-row>
 
-        <v-card class="px-4 pb-4 mt-4">
-          <m-card-title>
-            <template #title>Domínios</template>
-            <template #total>{{ domains ? domains.length : 0 }}</template>
-          </m-card-title>
+      <v-card class="px-4 pb-4 mt-4">
+        <m-card-title>
+          <template #title>Domínios</template>
+          <template #total>{{ domains ? domains.length : 0 }}</template>
+        </m-card-title>
 
-          <m-list-items
-            type="domain"
-            :items="domains"
-            :icon="{ name: 'shopping-cart', color: 'primary' }"
-            @selectItem="buyDomain"
-          />
-        </v-card>
-      </v-container>
-    </v-content>
+        <m-list-items
+          type="domain"
+          :items="domains"
+          :icon="{ name: 'shopping-cart', color: 'primary' }"
+          @selectItem="buyDomain"
+        />
+      </v-card>
+    </v-container>
   </v-app>
 </template>
 
