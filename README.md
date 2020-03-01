@@ -32,5 +32,9 @@ choosing the name of their new revolutionary project...
 
 #### Links
 
-[API](https://github.com/PaulloClara/name-gator-api)\
+[Deploy](https://github.com/paulloclara/name-gator)\
 [Rodrigo Branas](https://github.com/rodrigobranas)
+
+#### License
+
+MIT
