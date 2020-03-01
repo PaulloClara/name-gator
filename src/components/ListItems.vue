@@ -3,7 +3,7 @@
     <v-list-item
       v-for="(item, index) in items"
       :key="`${index}${item.name}`"
-      :class="index % 2 === 0 ? 'light' : 'grey lighten-2'"
+      :class="index % 2 === 0 ? 'light' : 'quaternary'"
       @click="$emit('selectItem', { index, type })"
     >
       <v-list-item-content>

@@ -15,12 +15,14 @@ export default new Vuetify({
       light: {
         primary: colors.lightBlue,
         secondary: colors.green.lighten1,
-        ternary: colors.red
+        ternary: colors.red,
+        quaternary: colors.grey.lighten3
       },
       dark: {
         primary: colors.blue.darken2,
         secondary: colors.green.darken2,
-        ternary: colors.red.darken1
+        ternary: colors.red.darken1,
+        quaternary: colors.grey.darken3
       }
     }
   }
