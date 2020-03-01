@@ -1,60 +1,63 @@
 <template>
   <v-app>
-    <Logo />
+    <m-logo />
 
     <v-content>
       <v-container>
         <v-row justify="center">
           <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
-              <TitleCard title="Prefixos" :total="prefixes.length" />
+              <m-card-title title="Prefixos" :total="prefixes.length" />
 
-              <ListItems
+              <m-list-items
                 type="prefix"
                 :items="prefixes"
                 :icon="{ name: 'trash', color: 'ternary' }"
                 @selectRemoveItem="removeItem"
               />
 
-              <Input label="Prefixo" type="prefix" @addItem="addItem" />
+              <m-input label="Prefixo" type="prefix" @addItem="addItem" />
             </v-card>
           </v-col>
 
           <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
-              <TitleCard title="Sufixos" :total="suffixes.length" />
+              <m-card-title title="Sufixos" :total="suffixes.length" />
 
-              <ListItems
+              <m-list-items
                 type="suffix"
                 :items="suffixes"
                 :icon="{ name: 'trash', color: 'ternary' }"
                 @selectRemoveItem="removeItem"
               />
 
-              <Input label="Sufixo" type="suffix" @addItem="addItem" />
+              <m-input label="Sufixo" type="suffix" @addItem="addItem" />
             </v-card>
           </v-col>
 
           <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
-              <TitleCard title="TLDs" :total="tlds.length" />
+              <m-card-title title="TLDs" :total="tlds.length" />
 
-              <ListItems
+              <m-list-items
                 type="tld"
                 :items="tlds"
                 :icon="{ name: 'trash', color: 'ternary' }"
                 @selectRemoveItem="removeItem"
               />
 
-              <Input label="TLD" type="tld" @addItem="addItem" />
+              <m-input label="TLD" type="tld" @addItem="addItem" />
             </v-card>
           </v-col>
         </v-row>
 
         <v-card class="px-4 pb-4 mt-4">
-          <TitleCard title="Domínios" :total="domains ? domains.length : 0" />
+          <m-card-title
+            title="Domínios"
+            :total="domains ? domains.length : 0"
+          />
 
-          <ListItems
+          <m-list-items
             type="domain"
             :items="domains"
             :icon="{ name: 'shopping-cart', color: 'primary' }"
@@ -72,15 +75,15 @@ import checkDomain from "@/services/checkDomain";
 import Logo from "@/components/Logo";
 import Input from "@/components/Input";
 import ListItems from "@/components/ListItems";
-import TitleCard from "@/components/TitleCard";
+import CardTitle from "@/components/CardTitle";
 
 export default {
   name: "App",
   components: {
-    Logo,
-    Input,
-    ListItems,
-    TitleCard
+    "m-logo": Logo,
+    "m-input": Input,
+    "m-list-items": ListItems,
+    "m-card-title": CardTitle
   },
   data: () => ({
     prefixes: [],
@@ -102,7 +105,7 @@ export default {
         )
       );
 
-      return domains.sort();
+      return domains;
     }
   },
   methods: {
