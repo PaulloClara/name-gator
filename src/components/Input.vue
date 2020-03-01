@@ -21,16 +21,24 @@
 <script>
 export default {
   name: "Input",
-  props: ["label"],
+  props: ["label", "type"],
   data: () => ({
     value: ""
   }),
   methods: {
     change() {
+      const { type } = this.$props;
       const { value } = this.$data;
 
+      const evt = {};
+
       if (!value.trim()) return;
-      this.$emit("addItem", { value });
+
+      if (type === "tld" && value[0] === ".") evt.value = value.slice(1);
+      else evt.value = value;
+
+      evt.type = type;
+      this.$emit("addItem", evt);
 
       this.value = "";
     }

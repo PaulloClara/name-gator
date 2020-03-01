@@ -1,41 +1,61 @@
 <template>
   <v-app>
     <Logo />
+
     <v-content>
       <v-container>
-        <v-row>
-          <v-col cols="12" sm="6">
+        <v-row justify="center">
+          <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
               <TitleCard title="Prefixos" :total="prefixes.length" />
+
               <ListItems
+                type="prefix"
                 :items="prefixes"
                 :icon="{ name: 'trash', color: 'ternary' }"
-                @selectRemoveItem="removeItem({ type: 'prefix', ...$event })"
+                @selectRemoveItem="removeItem"
               />
-              <Input
-                label="Prefixo"
-                @addItem="addItem({ type: 'prefix', ...$event })"
-              />
+
+              <Input label="Prefixo" type="prefix" @addItem="addItem" />
             </v-card>
           </v-col>
-          <v-col>
+
+          <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
               <TitleCard title="Sufixos" :total="suffixes.length" />
+
               <ListItems
+                type="suffix"
                 :items="suffixes"
                 :icon="{ name: 'trash', color: 'ternary' }"
-                @selectRemoveItem="removeItem({ type: 'suffix', ...$event })"
+                @selectRemoveItem="removeItem"
               />
-              <Input
-                label="Sufixo"
-                @addItem="addItem({ type: 'suffix', ...$event })"
+
+              <Input label="Sufixo" type="suffix" @addItem="addItem" />
+            </v-card>
+          </v-col>
+
+          <v-col cols="12" sm="6" md="4">
+            <v-card class="px-4 pb-4">
+              <TitleCard title="TLDs" :total="tlds.length" />
+
+              <ListItems
+                type="tld"
+                :items="tlds"
+                :icon="{ name: 'trash', color: 'ternary' }"
+                @selectRemoveItem="removeItem"
               />
+
+              <Input label="TLD" type="tld" @addItem="addItem" />
             </v-card>
           </v-col>
         </v-row>
+
         <v-card class="px-4 pb-4 mt-4">
           <TitleCard title="Domínios" :total="domains ? domains.length : 0" />
+
           <ListItems
+            type="domain"
             :items="domains"
             :icon="{ name: 'shopping-cart', color: 'primary' }"
             @selectItem="buyDomain"
@@ -64,61 +84,64 @@ export default {
   },
   data: () => ({
     prefixes: [],
-    suffixes: []
+    suffixes: [],
+    tlds: []
   }),
   asyncComputed: {
     domains() {
       const domains = [];
 
       this.$data.prefixes.forEach(prefix =>
-        this.$data.suffixes.forEach(async suffix => {
-          const domain = `${prefix.name}${suffix.name}`;
-          const { free: available } = (await checkDomain(`${domain}.com`)).data;
+        this.$data.suffixes.forEach(suffix =>
+          this.$data.tlds.forEach(async tld => {
+            const domain = `${prefix.name}${suffix.name}.${tld.name}`;
+            const { free: available } = (await checkDomain(domain)).data;
 
-          domains.push({ name: domain, available });
-        })
+            domains.push({ name: domain, available });
+          })
+        )
       );
 
-      return domains;
+      return domains.sort();
     }
   },
   methods: {
     addItem({ type, value }) {
-      this.$data[`${type}es`].push({ name: value });
+      type = type === "tld" ? `${type}s` : `${type}es`;
+      this.$data[type].push({ name: value });
     },
     removeItem({ type, index }) {
-      this.$data[`${type}es`].splice(index, 1);
+      type = type === "tld" ? `${type}s` : `${type}es`;
+      this.$data[type].splice(index, 1);
     },
     buyDomain({ index }) {
       const baseURL = "https://checkout.hostgator.com.br/?a=add";
       const domain = this.domains[index].name;
 
       window.open(baseURL + `&sld=${domain}&tld=.com`);
+    },
+    loadItem({ itemName, defaultValues }) {
+      this.$data[itemName] = (localStorage.getItem(itemName)
+        ? localStorage.getItem(itemName).split(",")
+        : defaultValues
+      ).map(item => ({ name: item }));
+    },
+    saveItem({ itemName }) {
+      localStorage.setItem(
+        itemName,
+        this.$data[itemName].map(item => item.name)
+      );
     }
   },
   beforeMount() {
-    this.$data.prefixes = (localStorage.getItem("prefixes")
-      ? localStorage.getItem("prefixes").split(",")
-      : ["git", "name"]
-    ).map(prefix => ({ name: prefix }));
-
-    this.$data.suffixes = (localStorage.getItem("suffixes")
-      ? localStorage.getItem("suffixes").split(",")
-      : ["hub", "gator"]
-    ).map(suffix => ({ name: suffix }));
+    this.loadItem({ itemName: "tlds", defaultValues: ["io", "com"] });
+    this.loadItem({ itemName: "prefixes", defaultValues: ["git", "name"] });
+    this.loadItem({ itemName: "suffixes", defaultValues: ["hub", "gator"] });
 
     window.addEventListener("beforeunload", () => {
-      const { prefixes, suffixes } = this.$data;
-
-      localStorage.setItem(
-        "prefixes",
-        prefixes.map(prefix => prefix.name)
-      );
-
-      localStorage.setItem(
-        "suffixes",
-        suffixes.map(suffix => suffix.name)
-      );
+      this.saveItem({ itemName: "tlds" });
+      this.saveItem({ itemName: "prefixes" });
+      this.saveItem({ itemName: "suffixes" });
     });
   }
 };
