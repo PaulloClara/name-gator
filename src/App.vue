@@ -7,7 +7,10 @@
         <v-row justify="center">
           <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
-              <m-card-title title="Prefixos" :total="prefixes.length" />
+              <m-card-title>
+                <template #title>Prefixos</template>
+                <template #total>{{ prefixes.length }}</template>
+              </m-card-title>
 
               <m-list-items
                 type="prefix"
@@ -22,7 +25,10 @@
 
           <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
-              <m-card-title title="Sufixos" :total="suffixes.length" />
+              <m-card-title>
+                <template #title>Sufixos</template>
+                <template #total>{{ suffixes.length }}</template>
+              </m-card-title>
 
               <m-list-items
                 type="suffix"
@@ -37,7 +43,10 @@
 
           <v-col cols="12" sm="6" md="4">
             <v-card class="px-4 pb-4">
-              <m-card-title title="TLDs" :total="tlds.length" />
+              <m-card-title>
+                <template #title>TLDs</template>
+                <template #total>{{ tlds.length }}</template>
+              </m-card-title>
 
               <m-list-items
                 type="tld"
@@ -52,10 +61,10 @@
         </v-row>
 
         <v-card class="px-4 pb-4 mt-4">
-          <m-card-title
-            title="Domínios"
-            :total="domains ? domains.length : 0"
-          />
+          <m-card-title>
+            <template #title>Domínios</template>
+            <template #total>{{ domains ? domains.length : 0 }}</template>
+          </m-card-title>
 
           <m-list-items
             type="domain"
