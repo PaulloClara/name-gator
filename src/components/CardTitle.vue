@@ -1,11 +1,15 @@
 <template>
-  <v-card-title>
-    <span class="pr-3">
-      <slot name="total"></slot>
-    </span>
+  <div>
+    <v-card-title class="pb-2">
+      <span class="pr-3">
+        <slot name="total"></slot>
+      </span>
 
-    <slot name="title"></slot>
-  </v-card-title>
+      <slot name="title"></slot>
+    </v-card-title>
+
+    <v-divider></v-divider>
+  </div>
 </template>
 
 <script>
