@@ -1,26 +1,34 @@
 # NameGator
 
-> Front Web do projeto NameGator, baseado no projeto de mesmo nome do Rodrigo Branas
+NameGator is a simple project to help developers in the difficult task of
+choosing the name of their new revolutionary project...
 
-## Tecnologias
+## Tecs
 
-- VueJS
-- VueTifyJS
-- Axios
+- VueJS: Progressive framework for building user interfaces.
+- VuetifyJS: Vuetify is a Material Design component framework for Vue.js.
+- Axios: Promise based HTTP client for the browser and Node.js.
+- VueAsyncComputed: Async computed properties for Vue.js.
 
-### Clonar/Configurar
+### Install
 
 `$ git clone https://github.com/PaulloClara/name-gator.git`\
 `$ cd name-gator`\
 `$ yarn install`
 
-### Rodar em Dev/Hot-Reload
+### Run Hot-Reload
 
 `$ yarn dev`
 
-### Compilar Codigo
+### Run Build
 
 `$ yarn build`
+
+### Run Deploy
+
+`$ yarn deploy`
+
+---
 
 #### Links
 
