@@ -128,9 +128,9 @@ export default {
     },
     buyDomain({ index }) {
       const baseURL = "https://checkout.hostgator.com.br/?a=add";
-      const domain = this.domains[index].name;
+      const [sld, tld] = this.domains[index].name.split(".");
 
-      window.open(baseURL + `&sld=${domain}&tld=.com`);
+      window.open(baseURL + `&sld=${sld}&tld=.${tld}`);
     },
     loadItem({ itemName, defaultValues }) {
       this.$data[itemName] = (localStorage.getItem(itemName)
@@ -146,7 +146,7 @@ export default {
     }
   },
   beforeMount() {
-    this.loadItem({ itemName: "tlds", defaultValues: ["io", "com"] });
+    this.loadItem({ itemName: "tlds", defaultValues: ["com", "org"] });
     this.loadItem({ itemName: "prefixes", defaultValues: ["git", "name"] });
     this.loadItem({ itemName: "suffixes", defaultValues: ["hub", "gator"] });
 
