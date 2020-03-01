@@ -7,10 +7,10 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   icons: {
-    iconfont: "mdi"
+    iconfont: "fa"
   },
   theme: {
-    dark: localStorage.theme === "dark" ? true : false,
+    dark: localStorage.getItem("theme") === "dark",
     themes: {
       light: {
         primary: colors.lightBlue,
