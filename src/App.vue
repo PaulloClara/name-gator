@@ -9,7 +9,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-card class="px-4 pb-4">
             <m-card-title>
-              <template #title>Prefixos</template>
+              <template #title>Prefixes</template>
               <template #total>{{ prefixes.length }}</template>
             </m-card-title>
 
@@ -20,14 +20,14 @@
               @selectRemoveItem="removeItem"
             />
 
-            <m-input label="Prefixo" type="prefix" @addItem="addItem" />
+            <m-input label="Prefix" type="prefix" @addItem="addItem" />
           </v-card>
         </v-col>
 
         <v-col cols="12" sm="6" md="4">
           <v-card class="px-4 pb-4">
             <m-card-title>
-              <template #title>Sufixos</template>
+              <template #title>Suffixes</template>
               <template #total>{{ suffixes.length }}</template>
             </m-card-title>
 
@@ -38,7 +38,7 @@
               @selectRemoveItem="removeItem"
             />
 
-            <m-input label="Sufixo" type="suffix" @addItem="addItem" />
+            <m-input label="Suffix" type="suffix" @addItem="addItem" />
           </v-card>
         </v-col>
 
@@ -63,7 +63,7 @@
 
       <v-card class="px-4 pb-4 mt-4">
         <m-card-title>
-          <template #title>Domínios</template>
+          <template #title>Domains</template>
           <template #total>{{ domains ? domains.length : 0 }}</template>
         </m-card-title>
 
