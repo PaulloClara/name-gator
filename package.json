@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "git-directory-deploy --directory dist --branch gh-pages",
-    "local-server": "vue-cli-service build --local-server"
+    "push-gh": "git-directory-deploy --directory dist --branch gh-pages",
+    "deploy": "yarn build && yarn push-gh",
+    "local-build": "yarn build --local-server"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
