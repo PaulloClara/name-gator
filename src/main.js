@@ -6,6 +6,8 @@ import "roboto-fontface/css/roboto/roboto-fontface.css";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 
+import "./registerServiceWorker";
+
 Vue.use(AsyncComputed);
 Vue.config.productionTip = false;
 
