@@ -6,9 +6,6 @@ import colors from "vuetify/lib/util/colors";
 Vue.use(Vuetify);
 
 export default new Vuetify({
-  icons: {
-    iconfont: "fa"
-  },
   theme: {
     dark: localStorage.getItem("theme") === "dark",
     themes: {
@@ -25,5 +22,8 @@ export default new Vuetify({
         quaternary: colors.grey.darken3
       }
     }
+  },
+  icons: {
+    iconfont: "fa"
   }
 });
