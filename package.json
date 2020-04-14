@@ -5,7 +5,7 @@
   "repository": "https://github.com/PaulloClara/name-gator.git",
   "author": "PaulloClara <paulloclara@gmail.com>",
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "push-gh": "git-directory-deploy --directory dist --branch gh-pages",
     "deploy": "yarn build && yarn push-gh",
