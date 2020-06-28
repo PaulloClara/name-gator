@@ -5,7 +5,9 @@
         <slot name="total"></slot>
       </span>
 
-      <slot name="title"></slot>
+      <span class="text-capitalize">
+        <slot name="text"></slot>
+      </span>
     </v-card-title>
 
     <v-divider></v-divider>
@@ -14,6 +16,6 @@
 
 <script>
 export default {
-  name: "CardTitle"
+  name: "Title"
 };
 </script>

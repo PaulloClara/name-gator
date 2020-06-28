@@ -1,18 +1,16 @@
 <template>
   <v-text-field
     v-model="value"
-    :label="label"
-    color="secondary"
     class="mt-2"
+    color="secondary"
+    :label="label"
     solo
     outlined
     hide-details
-    @change="change"
+    @change="handleChange"
   >
     <template #append>
-      <v-icon color="secondary" @click="change">
-        fa-plus
-      </v-icon>
+      <v-icon color="secondary" @click="handleChange">fa-plus</v-icon>
     </template>
   </v-text-field>
 </template>
@@ -20,26 +18,20 @@
 <script>
 export default {
   name: "Input",
-  props: ["label", "type"],
+  props: {
+    label: { type: String, required: true }
+  },
   data: () => ({
     value: ""
   }),
   methods: {
-    change() {
-      const { type } = this.$props;
+    handleChange() {
       const { value } = this.$data;
 
-      const evt = {};
-
       if (!value.trim()) return;
+      this.$emit("change", { value });
 
-      if (type === "tld" && value[0] === ".") evt.value = value.slice(1);
-      else evt.value = value;
-
-      evt.type = type;
-      this.$emit("addItem", evt);
-
-      this.value = "";
+      this.$data.value = "";
     }
   }
 };

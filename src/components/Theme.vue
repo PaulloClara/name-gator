@@ -1,28 +1,27 @@
 <template>
   <v-btn
-    id="button-theme"
+    style="border-width: medium;"
     :color="color"
     fab
     small
     outlined
-    @click="setTheme"
+    @click="handleSetTheme"
   ></v-btn>
 </template>
 
 <script>
 export default {
-  name: "SetTheme",
+  name: "Theme",
   data: () => ({
     color: "primary"
   }),
   methods: {
-    setTheme() {
-      localStorage.setItem(
-        "theme",
-        localStorage.getItem("theme") === "dark" ? "light" : "dark"
-      );
-
-      this.$vuetify.theme.dark = localStorage.getItem("theme") === "dark";
+    handleSetTheme() {
+      localStorage.setItem("theme", this.isDark() ? "light" : "dark");
+      this.$vuetify.theme.dark = this.isDark();
+    },
+    isDark() {
+      return localStorage.getItem("theme") === "dark";
     }
   },
   mounted() {
@@ -34,9 +33,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#button-theme {
-  border-width: medium;
-}
-</style>
