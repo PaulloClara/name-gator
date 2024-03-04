@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const axios = Axios.create({
-  baseURL: "https://api-checkdomain.herokuapp.com",
+  baseURL: "https://checkdomain-api-0a7240f08f7b.herokuapp.com",
   timeout: 20000
 });
 
