@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/name-gator/precache-manifest.b95e5572eaaf77074ad8e5f3cf8dccb8.js"
+  "/name-gator/precache-manifest.d014352fbb8440628280a34a9c3fc26e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "name-gator"});
